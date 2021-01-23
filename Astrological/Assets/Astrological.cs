@@ -37,7 +37,7 @@ public class Astrological : MonoBehaviour {
     bool AddOrSubtract = false;
     bool HitCheck = true;
 
-    //                  ->    xnor  and  or   xor   nand nor
+    //                     ->    xnor  and  or   xor   nand nor
     char[] Operators = {/*'⇒', */'⊙', '&', '|', '⊕', '↑', '↓'};
 
     static int moduleIdCounter = 1;
