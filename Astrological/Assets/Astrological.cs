@@ -19,10 +19,12 @@ public class Astrological : MonoBehaviour {
 
     int[] AstrologySigns = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
     int Batteries, BatteryHolders, Portplates, TwoFactor, ParallelPort, SerialPort, DVIPort, RCAPort, PS2Port, RJPort, Vowels, Consonants, Ports;
-    int jon = -1000000;
+    int jon = -1000000; //jon
+    int LogCheck = 0;
     int Stage = 0;
 
     float Hue = 0f;
+    float Opacity = 1f;
     float RandomXOffset;
     float RandomYOffset;
     float Saturation = .2f;
@@ -34,8 +36,12 @@ public class Astrological : MonoBehaviour {
     string Indicators;
 
     bool[] Validity = new bool[12];
+    bool[] ValiditySecondFloor = new bool[12];
+    bool[] ValidityThirdFloor = new bool[12];
+    bool[] CheckPresses = new bool[3];
     bool AddOrSubtract = false;
     bool HitCheck = true;
+    bool HasLoggedStage2;
 
     //                     ->    xnor  and  or   xor   nand nor
     char[] Operators = {/*'⇒', */'⊙', '&', '|', '⊕', '↑', '↓'};
@@ -371,18 +377,23 @@ public class Astrological : MonoBehaviour {
         Validity[10] = !Validity[10];
       if (Batteries == 0)
         Validity[11] = !Validity[11];
-      Debug.LogFormat("[Astrological #{0}] The following horoscopes are valid: ", moduleId);
-      int LogCheck = 0;
+
+      Debug.LogFormat("[Astrological #{0}] The following horoscopes are valid in stage 1: ", moduleId);
       for (int i = 0; i < 12; i++)
         if (Validity[i])
           LogCheck++;
-      if (LogCheck == 0) {
+      if (LogCheck == 0)
         Debug.LogFormat("[Astrological #{0}] Apparently, there are no valid horoscopes. ", moduleId);
+      else if (LogCheck == 12) {
+        Debug.LogFormat("[Astrological #{0}] Apparently, everything is valid. ", moduleId);
       }
       else
         for (int i = 0; i < 12; i++)
           if (Validity[i])
             Debug.LogFormat("[Astrological #{0}] {1}", moduleId, HoroscopeNames[i]);
+
+      for (int i = 0; i < 12; i++)
+        ValiditySecondFloor[i] = !Validity[i];
       Randomize();
     }
 
@@ -414,7 +425,14 @@ public class Astrological : MonoBehaviour {
         Debug.LogFormat("[Astrological #{0}] The current expression is ({1} {2} {3}) {4} {5}", moduleId, HoroscopeNames[AstrologySigns[0]], Operators[0], HoroscopeNames[AstrologySigns[1]], Operators[1], HoroscopeNames[AstrologySigns[2]]);
       }
 
-      HitCheck = CheckRight ? AnswerGenerator(1, 2, 0, 1) : AnswerGenerator(0, 1, 2, 0);
+      HitCheck = CheckRight ? AnswerGenerator(1, 2, 0, 1, Stage) : AnswerGenerator(0, 1, 2, 0, Stage);
+
+      if (HitCheck) {
+        Debug.LogFormat("[Astrological #{0}] This is valid, hit the green button.", moduleId);
+      }
+      else {
+        Debug.LogFormat("[Astrological #{0}] This in invalid, hit the red button.", moduleId);
+      }
 
     }
 
@@ -424,16 +442,20 @@ public class Astrological : MonoBehaviour {
       if (moduleSolved)
         return;
       if (Button == Buttons[0]) {
-        if (HitCheck)
+        if (HitCheck) {
+          CheckPresses[Stage] = true;
           Stage++;
+        }
         else {
           GetComponent<KMBombModule>().HandleStrike();
           StartCoroutine(Strike());
         }
       }
       else {
-        if (!HitCheck)
+        if (!HitCheck) {
+          CheckPresses[Stage] = false;
           Stage++;
+        }
         else {
           GetComponent<KMBombModule>().HandleStrike();
           StartCoroutine(Strike());
@@ -444,10 +466,11 @@ public class Astrological : MonoBehaviour {
         moduleSolved = true;
         Audio.PlaySoundAtTransform("Shutdown", this.transform);
         StartCoroutine(BackgroundColorChanger());
-        OperatorSymbolsTM[0].text = String.Empty;
-        OperatorSymbolsTM[1].text = String.Empty;
-        for (int i = 0; i < 3; i++)
-          AstrologySymbols[i].gameObject.SetActive(false);
+        StartCoroutine(SpriteHider());
+        //OperatorSymbolsTM[0].text = String.Empty;
+        //OperatorSymbolsTM[1].text = String.Empty;
+        //for (int i = 0; i < 3; i++)
+          //AstrologySymbols[i].gameObject.SetActive(false);
       }
       else
         Randomize();
@@ -460,6 +483,18 @@ public class Astrological : MonoBehaviour {
           Background.material.color = Color.HSVToRGB(Hue, Saturation, Value);
           yield return new WaitForSeconds(0.1f);
         }
+      }
+    }
+
+    IEnumerator SpriteHider () {
+      while (true) {
+        for (int i = 0; i < 3; i++) {
+          AstrologySymbols[i].color = new Color(0, 0, 0, Opacity);
+        }
+        OperatorSymbolsTM[0].color = new Color(0, 0, 0, Opacity);
+        OperatorSymbolsTM[1].color = new Color(0, 0, 0, Opacity);
+        Opacity -= .01f;
+        yield return new WaitForSeconds(0.01f);
       }
     }
 
@@ -478,10 +513,16 @@ public class Astrological : MonoBehaviour {
       Background.material.color = Color.HSVToRGB(Hue, Saturation, Value);
     }
 
-    bool AnswerGenerator (int x, int y, int z, int w) {
+    bool AnswerGenerator (int x, int y, int z, int w, int StageNumber) {
             //                                 ->    xnor  and  or   xor   nand nor
       bool Temp = false; //char[] Operators = {'⇒', '⊙', '&', '|', '⊕', '↑', '↓'};
-
+      bool SecondTemp = true;
+      if (StageNumber == 1) {
+        goto Stage2;
+      }
+      else if (StageNumber == 2) {
+        goto Stage3;
+      }
       switch (Operators[w]) {
         //case '⇒':
         //  if (Validity[AstrologySigns[x]] && !Validity[AstrologySigns[y]])
@@ -506,7 +547,6 @@ public class Astrological : MonoBehaviour {
           Temp = !(Validity[AstrologySigns[x]] | Validity[AstrologySigns[y]]);
         break;
       }
-      bool SecondTemp = true;
       switch (Operators[1 - w]) {
         //case '⇒':
         //  if (Validity[AstrologySigns[x]] && !Validity[AstrologySigns[y]])
@@ -529,6 +569,166 @@ public class Astrological : MonoBehaviour {
         break;
         case '↓':
           SecondTemp = !(Temp | Validity[AstrologySigns[z]]);
+        break;
+      }
+      return SecondTemp;
+
+      Stage2:
+      if (!HasLoggedStage2) {
+        LogCheck = 0;
+        Debug.LogFormat("[Astrological #{0}] The following horoscopes are valid in stage 2: ", moduleId);
+        for (int i = 0; i < 12; i++)
+          if (!Validity[i])
+            LogCheck++;
+        if (LogCheck == 0)
+          Debug.LogFormat("[Astrological #{0}] Apparently, there are no valid horoscopes. ", moduleId);
+        else if (LogCheck == 12) {
+          Debug.LogFormat("[Astrological #{0}] Apparently, everything is valid. ", moduleId);
+        }
+        else
+          for (int i = 0; i < 12; i++)
+            if (!Validity[i])
+              Debug.LogFormat("[Astrological #{0}] {1}", moduleId, HoroscopeNames[i]);
+        HasLoggedStage2 = true;
+      }
+
+      switch (Operators[w]) {
+        //case '⇒':
+        //  if (Validity[AstrologySigns[x]] && !Validity[AstrologySigns[y]])
+        //  Temp = false;
+        //break;
+        case '⊙':
+          Temp = !(ValiditySecondFloor[AstrologySigns[x]] ^ ValiditySecondFloor[AstrologySigns[y]]);
+        break;
+        case '&':
+          Temp = ValiditySecondFloor[AstrologySigns[x]] & ValiditySecondFloor[AstrologySigns[y]];
+        break;
+        case '|':
+          Temp = ValiditySecondFloor[AstrologySigns[x]] | ValiditySecondFloor[AstrologySigns[y]];
+        break;
+        case '⊕':
+          Temp = ValiditySecondFloor[AstrologySigns[x]] ^ ValiditySecondFloor[AstrologySigns[y]];
+        break;
+        case '↑':
+          Temp = !(ValiditySecondFloor[AstrologySigns[x]] & ValiditySecondFloor[AstrologySigns[y]]);
+        break;
+        case '↓':
+          Temp = !(ValiditySecondFloor[AstrologySigns[x]] | ValiditySecondFloor[AstrologySigns[y]]);
+        break;
+      }
+      switch (Operators[1 - w]) {
+        //case '⇒':
+        //  if (Validity[AstrologySigns[x]] && !Validity[AstrologySigns[y]])
+        //  Temp = false;
+        //break;
+        case '⊙':
+          SecondTemp = !(Temp ^ ValiditySecondFloor[AstrologySigns[z]]);
+        break;
+        case '&':
+          SecondTemp = Temp & ValiditySecondFloor[AstrologySigns[z]];
+        break;
+        case '|':
+          SecondTemp = Temp | ValiditySecondFloor[AstrologySigns[z]];
+        break;
+        case '⊕':
+          SecondTemp = Temp ^ ValiditySecondFloor[AstrologySigns[z]];
+        break;
+        case '↑':
+          SecondTemp = !(Temp & ValiditySecondFloor[AstrologySigns[z]]);
+        break;
+        case '↓':
+          SecondTemp = !(Temp | ValiditySecondFloor[AstrologySigns[z]]);
+        break;
+      }
+      return SecondTemp;
+      Stage3:
+      int Offset = Bomb.GetSerialNumberNumbers().Last() + 1;
+      if (CheckPresses[0] && CheckPresses[1]) {
+        Debug.LogFormat("[Astrological #{0}] The used operator to get the stage three value is AND.", moduleId);
+        for (int i = 0; i < 12; i++) {
+          ValidityThirdFloor[i] = Validity[i] & ValiditySecondFloor[(i + Offset) % 12];
+        }
+      }
+      else if (CheckPresses[0] && !CheckPresses[1]) {
+        Debug.LogFormat("[Astrological #{0}] The used operator to get the stage three value is OR.", moduleId);
+        for (int i = 0; i < 12; i++) {
+          ValidityThirdFloor[i] = Validity[i] | ValiditySecondFloor[(i + Offset) % 12];
+        }
+      }
+      else if (!CheckPresses[0] && CheckPresses[1]) {
+        Debug.LogFormat("[Astrological #{0}] The used operator to get the stage three value is XOR.", moduleId);
+        for (int i = 0; i < 12; i++) {
+          ValidityThirdFloor[i] = Validity[i] ^ ValiditySecondFloor[(i + Offset) % 12];
+        }
+      }
+      else {
+        Debug.LogFormat("[Astrological #{0}] The used operator to get the stage three value is XNOR.", moduleId);
+        for (int i = 0; i < 12; i++) {
+          ValidityThirdFloor[i] = !(Validity[i] | ValiditySecondFloor[(i + Offset) % 12]);
+        }
+      }
+
+      Debug.LogFormat("[Astrological #{0}] The following horoscopes are valid in stage 3: ", moduleId);
+      LogCheck = 0;
+      for (int i = 0; i < 12; i++)
+        if (ValidityThirdFloor[i])
+          LogCheck++;
+      if (LogCheck == 0)
+        Debug.LogFormat("[Astrological #{0}] Apparently, there are no valid horoscopes. ", moduleId);
+      else if (LogCheck == 12) {
+        Debug.LogFormat("[Astrological #{0}] Apparently, everything is valid. ", moduleId);
+      }
+      else
+        for (int i = 0; i < 12; i++)
+          if (ValidityThirdFloor[i])
+            Debug.LogFormat("[Astrological #{0}] {1}", moduleId, HoroscopeNames[i]);
+
+      switch (Operators[w]) {
+        //case '⇒':
+        //  if (Validity[AstrologySigns[x]] && !Validity[AstrologySigns[y]])
+        //  Temp = false;
+        //break;
+        case '⊙':
+          Temp = !(ValidityThirdFloor[AstrologySigns[x]] ^ ValidityThirdFloor[AstrologySigns[y]]);
+        break;
+        case '&':
+          Temp = ValidityThirdFloor[AstrologySigns[x]] & ValidityThirdFloor[AstrologySigns[y]];
+        break;
+        case '|':
+          Temp = ValidityThirdFloor[AstrologySigns[x]] | ValidityThirdFloor[AstrologySigns[y]];
+        break;
+        case '⊕':
+          Temp = ValidityThirdFloor[AstrologySigns[x]] ^ ValidityThirdFloor[AstrologySigns[y]];
+        break;
+        case '↑':
+          Temp = !(ValidityThirdFloor[AstrologySigns[x]] & ValidityThirdFloor[AstrologySigns[y]]);
+        break;
+        case '↓':
+          Temp = !(ValidityThirdFloor[AstrologySigns[x]] | ValidityThirdFloor[AstrologySigns[y]]);
+        break;
+      }
+      switch (Operators[1 - w]) {
+        //case '⇒':
+        //  if (Validity[AstrologySigns[x]] && !Validity[AstrologySigns[y]])
+        //  Temp = false;
+        //break;
+        case '⊙':
+          SecondTemp = !(Temp ^ ValidityThirdFloor[AstrologySigns[z]]);
+        break;
+        case '&':
+          SecondTemp = Temp & ValidityThirdFloor[AstrologySigns[z]];
+        break;
+        case '|':
+          SecondTemp = Temp | ValidityThirdFloor[AstrologySigns[z]];
+        break;
+        case '⊕':
+          SecondTemp = Temp ^ ValidityThirdFloor[AstrologySigns[z]];
+        break;
+        case '↑':
+          SecondTemp = !(Temp & ValidityThirdFloor[AstrologySigns[z]]);
+        break;
+        case '↓':
+          SecondTemp = !(Temp | ValidityThirdFloor[AstrologySigns[z]]);
         break;
       }
       return SecondTemp;
