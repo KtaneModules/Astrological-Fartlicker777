@@ -499,6 +499,7 @@ public class Astrological : MonoBehaviour {
     }
 
     IEnumerator Strike () {
+      Stage = 0;
       float TempHue = 1f;
       float TempSat = 1f;
       float TempVal = 1f;
