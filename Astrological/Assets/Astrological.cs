@@ -88,7 +88,7 @@ public class Astrological : MonoBehaviour {
       System.DateTime curTime = System.DateTime.Now;
       switch (curTime.Month) {
         case 3:
-        if (curTime.Day / 21 == 0) {
+        if (curTime.Day < 21) {
           Validity[11] = !Validity[11];
           Validity[0] = !Validity[0];
 
@@ -109,7 +109,7 @@ public class Astrological : MonoBehaviour {
         break;
 
         case 4:
-        if (curTime.Day / 20 == 0) {
+        if (curTime.Day < 20) {
           Validity[0] = !Validity[0];
           Validity[4] = !Validity[4];
 
@@ -130,7 +130,7 @@ public class Astrological : MonoBehaviour {
         break;
 
         case 5:
-        if (curTime.Day / 21 == 0) {
+        if (curTime.Day < 21) {
           Validity[1] = !Validity[1];
           Validity[5] = !Validity[5];
 
@@ -151,7 +151,7 @@ public class Astrological : MonoBehaviour {
         break;
 
         case 6:
-        if (curTime.Day / 21 == 0) {
+        if (curTime.Day < 21) {
           Validity[2] = !Validity[2];
           Validity[6] = !Validity[6];
 
@@ -172,7 +172,7 @@ public class Astrological : MonoBehaviour {
         break;
 
         case 7:
-        if (curTime.Day / 23 == 0) {
+        if (curTime.Day < 23) {
           Validity[3] = !Validity[3];
           Validity[7] = !Validity[7];
 
@@ -193,7 +193,7 @@ public class Astrological : MonoBehaviour {
         break;
 
         case 8:
-        if (curTime.Day / 23 == 0) {
+        if (curTime.Day < 23) {
           Validity[4] = !Validity[4];
           Validity[8] = !Validity[8];
 
@@ -214,7 +214,7 @@ public class Astrological : MonoBehaviour {
         break;
 
         case 9:
-        if (curTime.Day / 23 == 0) {
+        if (curTime.Day < 23) {
           Validity[5] = !Validity[5];
           Validity[9] = !Validity[9];
 
@@ -235,7 +235,7 @@ public class Astrological : MonoBehaviour {
         break;
 
         case 10:
-        if (curTime.Day / 23 == 0) {
+        if (curTime.Day < 23) {
           Validity[6] = !Validity[6];
           Validity[10] = !Validity[10];
 
@@ -256,7 +256,7 @@ public class Astrological : MonoBehaviour {
         break;
 
         case 11:
-        if (curTime.Day / 22 == 0) {
+        if (curTime.Day < 22) {
           Validity[7] = !Validity[7];
           Validity[11] = !Validity[11];
 
@@ -277,7 +277,7 @@ public class Astrological : MonoBehaviour {
         break;
 
         case 12:
-        if (curTime.Day / 22 == 0) {
+        if (curTime.Day < 22) {
           Validity[8] = !Validity[8];
           Validity[0] = !Validity[0];
 
@@ -298,7 +298,7 @@ public class Astrological : MonoBehaviour {
         break;
 
         case 1:
-        if (curTime.Day / 20 == 0) {
+        if (curTime.Day < 20) {
           Validity[9] = !Validity[9];
           Validity[1] = !Validity[1];
 
@@ -309,7 +309,7 @@ public class Astrological : MonoBehaviour {
         }
         else {
           Validity[10] = !Validity[10];
-          Validity[3] = !Validity[3];
+          Validity[2] = !Validity[2];
 
           if ("AQUARIUS".Any(x => Indicators.Contains(x)))
             Validity[8] = !Validity[8];
@@ -319,9 +319,9 @@ public class Astrological : MonoBehaviour {
         break;
 
         case 2:
-        if (curTime.Day / 19 == 0) {
+        if (curTime.Day < 19) {
           Validity[10] = !Validity[10];
-          Validity[3] = !Validity[3];
+          Validity[2] = !Validity[2];
 
           if (Indicators.Any(x => "AQUARIUS".Contains(x)))
             Validity[8] = !Validity[8];
