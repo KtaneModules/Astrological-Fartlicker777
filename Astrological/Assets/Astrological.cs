@@ -267,7 +267,7 @@ public class Astrological : MonoBehaviour {
         }
         else {
           Validity[8] = !Validity[8];
-          Validity[0] = !Validity[0];
+          Validity[1] = !Validity[1];
 
           if (Indicators.Any(x => "SAGGITARIUS".Contains(x)))
             Validity[10] = !Validity[10];
@@ -279,7 +279,7 @@ public class Astrological : MonoBehaviour {
         case 12:
         if (curTime.Day < 22) {
           Validity[8] = !Validity[8];
-          Validity[0] = !Validity[0];
+          Validity[1] = !Validity[1];
 
           if (Indicators.Any(x => "SAGGITARIUS".Contains(x)))
             Validity[10] = !Validity[10];
@@ -288,7 +288,7 @@ public class Astrological : MonoBehaviour {
         }
         else {
           Validity[9] = !Validity[9];
-          Validity[1] = !Validity[1];
+          Validity[2] = !Validity[2];
 
           if (ParallelPort > 0 || SerialPort > 0 || RJPort > 0 || RCAPort > 0 || DVIPort > 0) {
             Validity[11] = !Validity[11];
@@ -300,7 +300,7 @@ public class Astrological : MonoBehaviour {
         case 1:
         if (curTime.Day < 20) {
           Validity[9] = !Validity[9];
-          Validity[1] = !Validity[1];
+          Validity[2] = !Validity[2];
 
           if (ParallelPort > 0 || SerialPort > 0 || RJPort > 0 || RCAPort > 0 || DVIPort > 0) {
             Validity[11] = !Validity[11];
@@ -309,7 +309,7 @@ public class Astrological : MonoBehaviour {
         }
         else {
           Validity[10] = !Validity[10];
-          Validity[2] = !Validity[2];
+          Validity[3] = !Validity[3];
 
           if ("AQUARIUS".Any(x => Indicators.Contains(x)))
             Validity[8] = !Validity[8];
@@ -321,7 +321,7 @@ public class Astrological : MonoBehaviour {
         case 2:
         if (curTime.Day < 19) {
           Validity[10] = !Validity[10];
-          Validity[2] = !Validity[2];
+          Validity[3] = !Validity[3];
 
           if (Indicators.Any(x => "AQUARIUS".Contains(x)))
             Validity[8] = !Validity[8];
@@ -330,7 +330,7 @@ public class Astrological : MonoBehaviour {
         }
         else {
           Validity[11] = !Validity[11];
-          Validity[3] = !Validity[3];
+          Validity[0] = !Validity[0];
 
           if (ParallelPort > 0 || PS2Port > 0 || SerialPort > 0 || RCAPort > 0 || DVIPort > 0) {
             Validity[9] = !Validity[9];
