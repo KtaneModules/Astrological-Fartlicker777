@@ -330,7 +330,7 @@ public class Astrological : MonoBehaviour {
         }
         else {
           Validity[11] = !Validity[11];
-          Validity[3] = !Validity[3];
+          Validity[0] = !Validity[0];
 
           if (ParallelPort > 0 || PS2Port > 0 || SerialPort > 0 || RCAPort > 0 || DVIPort > 0) {
             Validity[9] = !Validity[9];
