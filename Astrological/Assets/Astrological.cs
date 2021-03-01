@@ -340,7 +340,7 @@ public class Astrological : MonoBehaviour {
         break;
       }
 
-      if (Batteries * 2 == BatteryHolders && Batteries != 0)
+      if (BatteryHolders * 2 == Batteries && Batteries != 0)
         Validity[0] = !Validity[0];
       if (TwoFactor > 0)
         Validity[1] = !Validity[1];
