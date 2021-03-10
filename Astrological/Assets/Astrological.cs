@@ -665,7 +665,7 @@ public class Astrological : MonoBehaviour {
       else {
         Debug.LogFormat("[Astrological #{0}] The used operator to get the stage three value is XNOR.", moduleId);
         for (int i = 0; i < 12; i++) {
-          ValidityThirdFloor[i] = !(Validity[i] | ValiditySecondFloor[(i + Offset) % 12]);
+          ValidityThirdFloor[i] = Validity[i] == ValiditySecondFloor[(i + Offset) % 12] ? true : false;
         }
       }
 
