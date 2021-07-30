@@ -194,9 +194,9 @@ public class Astrological : MonoBehaviour {
                Validity[8] = !Validity[8];
 
                if (ParallelPort > 0 || SerialPort > 0 || RCAPort > 0) {
-                  Validity[0] = !Validity[0];
+                  Validity[6] = !Validity[6];
                }
-               if (Indicators.Any(x => "GEMINI".Contains(x))) {
+               if (Indicators.Any(x => "LEO".Contains(x))) {
                   Validity[9] = !Validity[9];
                }
             }
@@ -208,9 +208,9 @@ public class Astrological : MonoBehaviour {
                Validity[8] = !Validity[8];
 
                if (ParallelPort > 0 || SerialPort > 0 || RCAPort > 0) {
-                  Validity[0] = !Validity[0];
+                  Validity[6] = !Validity[6];
                }
-               if (Indicators.Any(x => "GEMINI".Contains(x))) {
+               if (Indicators.Any(x => "LEO".Contains(x))) {
                   Validity[9] = !Validity[9];
                }
             }
