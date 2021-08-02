@@ -147,11 +147,11 @@ public class Astrological : MonoBehaviour {
                Validity[2] = !Validity[2];
                Validity[6] = !Validity[6];
 
-               if (Indicators.Any(x => "GEMINI".Contains(x))) {
-                  Validity[2] = !Validity[2];
-               }
                if (Bomb.GetSerialNumber().Any(x => "GEMINI".Contains(x))) {
-                  Validity[11] = !Validity[11];
+                  Validity[9] = !Validity[9];
+               }
+               if (Indicators.Any(x => "GEMINI".Contains(x))) {
+                  Validity[0] = !Validity[0];
                }
             }
             break;
@@ -161,11 +161,11 @@ public class Astrological : MonoBehaviour {
                Validity[2] = !Validity[2];
                Validity[6] = !Validity[6];
 
-               if (Indicators.Any(x => "GEMINI".Contains(x))) {
-                  Validity[2] = !Validity[2];
-               }
                if (Bomb.GetSerialNumber().Any(x => "GEMINI".Contains(x))) {
-                  Validity[11] = !Validity[11];
+                  Validity[9] = !Validity[9];
+               }
+               if (Indicators.Any(x => "GEMINI".Contains(x))) {
+                  Validity[0] = !Validity[0];
                }
             }
             else {
@@ -197,7 +197,7 @@ public class Astrological : MonoBehaviour {
                   Validity[6] = !Validity[6];
                }
                if (Indicators.Any(x => "LEO".Contains(x))) {
-                  Validity[9] = !Validity[9];
+                  Validity[0] = !Validity[0];
                }
             }
             break;
@@ -211,18 +211,18 @@ public class Astrological : MonoBehaviour {
                   Validity[6] = !Validity[6];
                }
                if (Indicators.Any(x => "LEO".Contains(x))) {
-                  Validity[9] = !Validity[9];
+                  Validity[0] = !Validity[0];
                }
             }
             else {
                Validity[5] = !Validity[5];
                Validity[9] = !Validity[9];
 
-               if (Indicators.Any(x => "VIRGO".Contains(x))) {
-                  Validity[1] = !Validity[1];
-               }
                if (Bomb.GetSerialNumber().Any(x => "VIRGO".Contains(x))) {
                   Validity[7] = !Validity[7];
+               }
+               if (Indicators.Any(x => "VIRGO".Contains(x))) {
+                  Validity[1] = !Validity[1];
                }
             }
             break;
@@ -232,22 +232,22 @@ public class Astrological : MonoBehaviour {
                Validity[5] = !Validity[5];
                Validity[9] = !Validity[9];
 
-               if (Indicators.Any(x => "VIRGO".Contains(x))) {
-                  Validity[1] = !Validity[1];
-               }
                if (Bomb.GetSerialNumber().Any(x => "VIRGO".Contains(x))) {
                   Validity[7] = !Validity[7];
+               }
+               if (Indicators.Any(x => "VIRGO".Contains(x))) {
+                  Validity[1] = !Validity[1];
                }
             }
             else {
                Validity[6] = !Validity[6];
                Validity[10] = !Validity[10];
 
-               if (Indicators.Any(x => "LIBRA".Contains(x))) {
-                  Validity[2] = !Validity[2];
-               }
                if (ParallelPort > 0 || SerialPort > 0 || RCAPort > 0 || DVIPort > 0) {
                   Validity[4] = !Validity[4];
+               }
+               if (Indicators.Any(x => "LIBRA".Contains(x))) {
+                  Validity[2] = !Validity[2];
                }
             }
             break;
@@ -257,22 +257,22 @@ public class Astrological : MonoBehaviour {
                Validity[6] = !Validity[6];
                Validity[10] = !Validity[10];
 
-               if (Indicators.Any(x => "LIBRA".Contains(x))) {
-                  Validity[2] = !Validity[2];
-               }
                if (ParallelPort > 0 || SerialPort > 0 || RCAPort > 0 || DVIPort > 0) {
                   Validity[4] = !Validity[4];
+               }
+               if (Indicators.Any(x => "LIBRA".Contains(x))) {
+                  Validity[2] = !Validity[2];
                }
             }
             else {
                Validity[7] = !Validity[7];
                Validity[11] = !Validity[11];
 
-               if (Indicators.Any(x => "SCORPIO".Contains(x))) {
-                  Validity[3] = !Validity[3];
-               }
                if (Bomb.GetSerialNumber().Any(x => "SCORPIO".Contains(x))) {
                   Validity[5] = !Validity[5];
+               }
+               if (Indicators.Any(x => "SCORPIO".Contains(x))) {
+                  Validity[3] = !Validity[3];
                }
             }
             break;
@@ -282,22 +282,22 @@ public class Astrological : MonoBehaviour {
                Validity[7] = !Validity[7];
                Validity[11] = !Validity[11];
 
-               if (Indicators.Any(x => "SCORPIO".Contains(x))) {
-                  Validity[3] = !Validity[3];
-               }
                if (Bomb.GetSerialNumber().Any(x => "SCORPIO".Contains(x))) {
                   Validity[5] = !Validity[5];
+               }
+               if (Indicators.Any(x => "SCORPIO".Contains(x))) {
+                  Validity[3] = !Validity[3];
                }
             }
             else {
                Validity[8] = !Validity[8];
                Validity[1] = !Validity[1];
 
-               if (Indicators.Any(x => "SAGGITARIUS".Contains(x))) {
-                  Validity[10] = !Validity[10];
-               }
                if (ParallelPort > 0 || SerialPort > 0 || PS2Port > 0 || RJPort > 0 || RCAPort > 0 || DVIPort > 0) {
                   Validity[4] = !Validity[4];
+               }
+               if (Indicators.Any(x => "SAGGITARIUS".Contains(x))) {
+                  Validity[10] = !Validity[10];
                }
             }
             break;
@@ -307,11 +307,11 @@ public class Astrological : MonoBehaviour {
                Validity[8] = !Validity[8];
                Validity[1] = !Validity[1];
 
-               if (Indicators.Any(x => "SAGGITARIUS".Contains(x))) {
-                  Validity[10] = !Validity[10];
-               }
                if (ParallelPort > 0 || SerialPort > 0 || PS2Port > 0 || RJPort > 0 || RCAPort > 0 || DVIPort > 0) {
                   Validity[4] = !Validity[4];
+               }
+               if (Indicators.Any(x => "SAGGITARIUS".Contains(x))) {
+                  Validity[10] = !Validity[10];
                }
             }
             else {
@@ -339,10 +339,12 @@ public class Astrological : MonoBehaviour {
                Validity[10] = !Validity[10];
                Validity[3] = !Validity[3];
 
-               if ("AQUARIUS".Any(x => Indicators.Contains(x)))
-                  Validity[8] = !Validity[8];
-               if (ParallelPort > 0 || SerialPort > 0 || PS2Port > 0 || RJPort > 0 || RCAPort > 0 || DVIPort > 0)
+               if (ParallelPort > 0 || SerialPort > 0 || PS2Port > 0 || RJPort > 0 || RCAPort > 0 || DVIPort > 0) {
                   Validity[6] = !Validity[6];
+               }
+               if ("AQUARIUS".Any(x => Indicators.Contains(x))) {
+                  Validity[8] = !Validity[8];
+               }
             }
             break;
 
@@ -351,10 +353,12 @@ public class Astrological : MonoBehaviour {
                Validity[10] = !Validity[10];
                Validity[3] = !Validity[3];
 
-               if (Indicators.Any(x => "AQUARIUS".Contains(x)))
-                  Validity[8] = !Validity[8];
-               if (ParallelPort > 0 || SerialPort > 0 || PS2Port > 0 || RJPort > 0 || RCAPort > 0 || DVIPort > 0)
+               if (ParallelPort > 0 || SerialPort > 0 || PS2Port > 0 || RJPort > 0 || RCAPort > 0 || DVIPort > 0) {
                   Validity[6] = !Validity[6];
+               }
+               if ("AQUARIUS".Any(x => Indicators.Contains(x))) {
+                  Validity[8] = !Validity[8];
+               }
             }
             else {
                Validity[11] = !Validity[11];
